@@ -1,0 +1,14 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to the Grading System</h1>
+    <p class="lead">This is a simple and effective way to manage student grades.</p>
+    <hr class="my-4">
+    <a class="btn btn-primary btn-lg" href="{% url 'add_grade' %}" role="button">Add Grade</a>
+    <a class="btn btn-secondary btn-lg" href="{% url 'view_grades' %}" role="button">View Grades</a>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+<!-- templates/view_grades.html -->
+{% extends 'base.html' %}
+
+{% block title %}View Grades{% endblock %}
+
+{% block content %}
+<h2>View Grades</h2>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Student</th>
+            <th scope="col">Course</th>
+            <th scope="col">Midterm</th>
+            <th scope="col">Final</th>
+            <th scope="col">Continuous Assessment</th>
+            <th scope="col">Practical</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grade in grades %}
+            <tr>
+                <td>{{ grade.student.username }}</td>
+                <td>{{ grade.course.name }}</td>
+                <td>{{ grade.midterm }}</td>
+                <td>{{ grade.final }}</td>
+                <td>{{ grade.continuous_assessment }}</td>
+                <td>{{ grade.practical }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
