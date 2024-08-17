@@ -10,7 +10,115 @@
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'js/func.js' %}"></script>
-    {% block extra_css %}{% endblock %}
+    {% block extra_css %}
+    <style>
+        body {
+            background-color: #2C2F33;
+            font-family: 'Poppins', sans-serif;
+            color: #FFFFFF;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+    
+        #sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            height: 100%;
+            background-color: #23272A;
+            color: #99AAB5;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transform: translateX(-250px); /* Initially hidden */
+            transition: transform 0.3s ease;
+        }
+    
+        #sidebar.active {
+            transform: translateX(0); /* Slide in */
+        }
+    
+        #top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #23272A;
+            padding: 15px;
+            color: #99AAB5;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 900;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: left 0.3s ease, width 0.3s ease;
+        }
+    
+        #top-navbar.sidebar-active {
+            left: 250px; /* Adjust when sidebar is active */
+            width: calc(100% - 250px); /* Extend to fit the width when sidebar is open */
+        }
+    
+        .menu-btn, .account-btn {
+            background: none;
+            border: none;
+            color: #99AAB5;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    
+        .menu-btn:hover, .account-btn:hover {
+            color: #7289DA;
+        }
+    
+        #main-content {
+            margin-top: 60px;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+    
+        #main-content.sidebar-active {
+            margin-left: 250px; /* Adjust when sidebar is active */
+        }
+    
+        #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+    
+        #sidebar ul li {
+            margin: 10px 0;
+        }
+    
+        #sidebar ul li a {
+            color: #99AAB5;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+    
+        #sidebar ul li a:hover {
+            background-color: #7289DA;
+            color: #FFFFFF;
+        }
+    
+        .close-btn {
+            background: none;
+            border: none;
+            color: #99AAB5;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+    </style>
+    {% endblock %}
+    
 </head>
 <body>
     <nav id="sidebar">
@@ -27,12 +135,43 @@
             <button class="menu-btn" id="menu-btn">&#9776;</button>
             <a href="{% url 'login' %}" class="account-btn">&#128100;</a>
         </header>   
+        {% block content %}
+        {% endblock %}
     </div>
-    {% block content %}
-    {% endblock %}
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="{% static 'js/func.js' %}"></script>
 
-    {% block extra_js %}{% endblock %}
+    {% block extra_js %}
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const menuBtn = document.getElementById('menu-btn');
+        const closeBtn = document.getElementById('close-btn');
+        const topNavbar = document.getElementById('top-navbar');
+        const mainContent = document.getElementById('main-content');
+    
+        menuBtn.addEventListener('click', function() {
+            sidebar.classList.add('active');
+            topNavbar.classList.add('sidebar-active');
+            mainContent.classList.add('sidebar-active');
+        });
+    
+        closeBtn.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            topNavbar.classList.remove('sidebar-active');
+            mainContent.classList.remove('sidebar-active');
+        });
+    
+        // Close sidebar when clicking outside of it
+        document.addEventListener('click', function(e) {
+            if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+                sidebar.classList.remove('active');
+                topNavbar.classList.remove('sidebar-active');
+                mainContent.classList.remove('sidebar-active');
+            }
+        });
+    </script>
+    {% endblock %}
+    
 </body>
 </html>

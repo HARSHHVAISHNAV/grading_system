@@ -1,135 +1,106 @@
 {% extends 'base.html' %}
 
 {% block title %}My Subject{% endblock %}
-
 {% block extra_css %}
 <style>
-    /* Ensure body has no extra margin */
-    body {
-        margin: 0;
-        overflow-x: hidden;
-    }
-
-    /* Main content area adjustment */
-    #main-content {
-        transition: margin-left 0.3s ease;
-        padding: 20px;
-        box-sizing: border-box;
-    }
-
-    /* Adjust main content when sidebar is active */
-    #main-content.sidebar-active {
-        margin-left: 250px; /* Width of the sidebar */
-    }
-
-    /* Sidebar styling */
-    #sidebar {
-        position: fixed;
-        top: 0;
-        left: 0; /* Left side sidebar */
-        width: 250px;
-        height: 100%;
-        background-color: #333;
-        color: #fff;
-        transition: transform 0.3s ease;
-        transform: translateX(-100%); /* Initially hidden */
-        z-index: 1000; /* Ensure it is on top */
-    }
-
-    /* Sidebar active state */
-    #sidebar.active {
-        transform: translateX(0); /* Slide in */
-    }
-
-    /* Container for the subjects */
+    /* Subjects container */
     .subjects-container {
         display: grid;
-        grid-template-columns: repeat(4, 1fr); /* Start with 4 columns */
+        grid-template-columns: repeat(4, 1fr);
         gap: 20px;
         padding: 20px;
-        box-sizing: border-box;
-        transition: grid-template-columns 0.3s ease;
+        background-color: #2C2F33;
+        margin-top: 80px; /* Ensure space below the navbar */
     }
 
-    /* Style for each subject card */
+    /* Subject card */
     .subject-card {
-        background-color: #f4f4f4;
+        background-color: #23272A;
         border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        width: 100%;
-        height: 200px;
         padding: 20px;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        box-sizing: border-box;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        color: #99AAB5;
     }
 
-    /* Title of the subject */
-    .subject-title {
+    .subject-card .subject-title {
         font-size: 1.5rem;
         font-weight: bold;
-        color: #333;
+        color: #7289DA;
+        margin-bottom: 10px;
     }
 
-    /* Description or other content inside the card */
-    .subject-description {
-        font-size: 1rem;
-        color: #666;
+    .subject-card .subject-description {
+        color: #99AAB5;
     }
 
-    /* Add subject button */
+    /* Add Subject button */
+    .add-subject-container {
+        text-align: center;
+        margin: 20px auto; /* Center the container */
+        padding-top: 80px; /* Ensure space below the navbar */
+    }
+
     .add-subject-btn {
-        background-color: #007bff;
-        color: white;
+        background-color: #7289DA;
+        color: #FFFFFF;
         padding: 10px 20px;
         border-radius: 5px;
         border: none;
         cursor: pointer;
         font-size: 1rem;
-        margin: 30px;
-        text-align: center;
         transition: background-color 0.3s ease;
     }
 
     .add-subject-btn:hover {
-        background-color: #0056b3;
-    }
-
-    /* Button container */
-    .add-subject-container {
-        text-align: center;
+        background-color: #5865F2;
     }
 
     /* Responsive adjustments */
     @media (max-width: 1200px) {
         .subjects-container {
-            grid-template-columns: repeat(3, 1fr); /* Adjust to 3 columns for smaller screens */
+            grid-template-columns: repeat(3, 1fr);
         }
     }
 
     @media (max-width: 900px) {
         .subjects-container {
-            grid-template-columns: repeat(2, 1fr); /* Adjust to 2 columns */
-        }
-
-        .subject-card {
-            height: 180px;
+            grid-template-columns: repeat(2, 1fr);
         }
     }
 
     @media (max-width: 600px) {
         .subjects-container {
-            grid-template-columns: 1fr; /* Single column on very small screens */
-        }
-
-        .subject-card {
-            height: 150px;
-            margin: 0 auto;
+            grid-template-columns: 1fr;
         }
     }
+
+    #sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+    
+        #sidebar ul li {
+            margin: 10px 0;
+        }
+    
+        #sidebar ul li a {
+            color: #99AAB5;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+    
+        #sidebar ul li a:hover {
+            background-color: #7289DA;
+            color: #FFFFFF;
+        }
+    
 </style>
 {% endblock %}
+
+
 
 {% block content %}
 <div class="add-subject-container">
@@ -163,38 +134,9 @@
 
 {% block extra_js %}
 <script>
-    // JavaScript to handle sidebar toggling
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('main-content');
-    const subjectsContainer = document.querySelector('.subjects-container');
-    const menuBtn = document.getElementById('menu-btn');
-    const closeBtn = document.getElementById('close-btn');
-
-    menuBtn.addEventListener('click', function() {
-        sidebar.classList.add('active');
-        mainContent.classList.add('sidebar-active');
-        subjectsContainer.style.gridTemplateColumns = 'repeat(3, 1fr)'; /* Adjust to 3 columns when sidebar is active */
-    });
-
-    closeBtn.addEventListener('click', function() {
-        sidebar.classList.remove('active');
-        mainContent.classList.remove('sidebar-active');
-        subjectsContainer.style.gridTemplateColumns = 'repeat(4, 1fr)'; /* Reset to 4 columns when sidebar is hidden */
-    });
-
-    // Close sidebar when clicking outside of it
-    document.addEventListener('click', function(e) {
-        if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
-            sidebar.classList.remove('active');
-            mainContent.classList.remove('sidebar-active');
-            subjectsContainer.style.gridTemplateColumns = 'repeat(4, 1fr)'; /* Reset to 4 columns when sidebar is hidden */
-        }
-    });
-
-    // JavaScript for Add Subject button
     document.querySelector('.add-subject-btn').addEventListener('click', function() {
         alert('Add Subject button clicked');
-        // You can add functionality to open a form or a modal to add a subject
+        // Placeholder for future functionality
     });
 </script>
 {% endblock %}
