@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    <h2>Student Progress Overview</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Assignment</th>
+                <th>Progress</th>
+                <th>Grade</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for progress in progress_list %}
+            <tr>
+                <td>{{ progress.student_name }}</td>
+                <td>{{ progress.assignment.assignment_name }}</td>
+                <td>{{ progress.progress }}</td>
+                <td>{{ progress.grade }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</section>
+{% endblock %}
