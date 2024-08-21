@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Subject{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-container {
+        transform: translateY(10%);
+        padding: 20px;
+        background-color: #2C2F33;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        color: #99AAB5;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input[type="checkbox"] {
+        margin-right: 10px;
+    }
+
+    .field-container {
+        display: none;
+    }
+
+    .add-subject-btn {
+        background-color: #7289DA;
+        color: #FFFFFF;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+        display: block;
+        margin-top: 20px;
+    }
+
+    .add-subject-btn:hover {
+        background-color: #5865F2;
+    }
+
+    .fields-dropdown {
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <form method="post" action="{% url 'add_subject' %}">
+        {% csrf_token %}
+        <h2>Select Table and Enter Data</h2>
+
+        <div class="form-group">
+            <label><input type="checkbox" class="table-checkbox" data-table="courses"> Courses</label>
+            <div class="field-container courses-fields">
+                <label for="course_code">Course Code:</label>
+                <input type="text" id="course_code" name="course_code">
+                <label for="course_title">Course Title:</label>
+                <input type="text" id="course_title" name="course_title">
+                <label for="credits">Credits:</label>
+                <input type="number" id="credits" name="credits">
+                <label for="total_marks">Total Marks:</label>
+                <input type="number" id="total_marks" name="total_marks">
+                <label for="type">Type:</label>
+                <select id="type" name="type" class="type-dropdown">
+                    <option value="">Select Type</option>
+                    <option value="P">Practical</option>
+                    <option value="T">Theoretical</option>
+                </select>
+                <div class="fields-dropdown">
+                    <div class="practical-fields field-container">
+                        <label for="ciap_marks">CIAP Marks:</label>
+                        <input type="number" id="ciap_marks" name="ciap_marks">
+                        <label for="esep_marks">ESEP Marks:</label>
+                        <input type="number" id="esep_marks" name="esep_marks">
+                    </div>
+                    <div class="theoretical-fields field-container">
+                        <label for="mse_marks">MSE Marks:</label>
+                        <input type="number" id="mse_marks" name="mse_marks">
+                        <label for="cce_marks">CCE Marks:</label>
+                        <input type="number" id="cce_marks" name="cce_marks">
+                        <label for="ese_marks">ESE Marks:</label>
+                        <input type="number" id="ese_marks" name="ese_marks">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Tables Checkboxes -->
+        <div class="form-group">
+            <h3>Additional Tables</h3>
+            <div class="additional-tables">
+                <label><input type="checkbox" class="table-checkbox" data-table="case_study"> Case Study</label>
+                <label><input type="checkbox" class="table-checkbox" data-table="design"> Design</label>
+                <label><input type="checkbox" class="table-checkbox" data-table="innovation"> Innovation</label>
+                <label><input type="checkbox" class="table-checkbox" data-table="quiz"> Quiz</label>
+                <label><input type="checkbox" class="table-checkbox" data-table="ppt"> PPT</label>
+                <label><input type="checkbox" class="table-checkbox" data-table="gd"> GD</label>
+                <label><input type="checkbox" class="table-checkbox" data-table="presentation"> Presentation</label>
+            </div>
+        </div>
+
+        <!-- Specific fields for each table -->
+        <div class="form-group">
+            <div class="field-container case_study-fields">
+                <!-- Case Study Fields -->
+                <label for="case_study_field_1">Field 1:</label>
+                <input type="text" id="case_study_field_1" name="case_study_field_1">
+                <!-- Add more fields as required -->
+            </div>
+
+            <div class="field-container design-fields">
+                <!-- Design Fields -->
+                <label for="design_field_1">Field 1:</label>
+                <input type="text" id="design_field_1" name="design_field_1">
+                <!-- Add more fields as required -->
+            </div>
+
+            <div class="field-container innovation-fields">
+                <!-- Innovation Fields -->
+                <label for="innovation_field_1">Field 1:</label>
+                <input type="text" id="innovation_field_1" name="innovation_field_1">
+                <!-- Add more fields as required -->
+            </div>
+
+            <div class="field-container quiz-fields">
+                <!-- Quiz Fields -->
+                <label for="quiz_field_1">Field 1:</label>
+                <input type="text" id="quiz_field_1" name="quiz_field_1">
+                <!-- Add more fields as required -->
+            </div>
+
+            <div class="field-container ppt-fields">
+                <!-- PPT Fields -->
+                <label for="ppt_field_1">Field 1:</label>
+                <input type="text" id="ppt_field_1" name="ppt_field_1">
+                <!-- Add more fields as required -->
+            </div>
+
+            <div class="field-container gd-fields">
+                <!-- GD Fields -->
+                <label for="gd_field_1">Field 1:</label>
+                <input type="text" id="gd_field_1" name="gd_field_1">
+                <!-- Add more fields as required -->
+            </div>
+
+            <div class="field-container presentation-fields">
+                <!-- Presentation Fields -->
+                <label for="presentation_field_1">Field 1:</label>
+                <input type="text" id="presentation_field_1" name="presentation_field_1">
+                <!-- Add more fields as required -->
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="add-subject-btn">Add Subject</button>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll('.table-checkbox').forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            const tableName = this.getAttribute('data-table');
+            const fieldsContainer = document.querySelector(`.${tableName}-fields`);
+            fieldsContainer.style.display = this.checked ? 'block' : 'none';
+        });
+    });
+
+    document.querySelector('.type-dropdown').addEventListener('change', function() {
+        const type = this.value;
+        document.querySelector('.practical-fields').style.display = type === 'P' ? 'block' : 'none';
+        document.querySelector('.theoretical-fields').style.display = type === 'T' ? 'block' : 'none';
+    });
+</script>
+{% endblock %}

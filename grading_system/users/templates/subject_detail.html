@@ -4,157 +4,9 @@
 
 {% block extra_css %}
 <style>
-    /* Ensure the table aligns below the navbar */
-    .subject-detail-container {
-        margin-top: 20px; /* Adjust to avoid overlap with the navbar */
-        display: flex;
-        background-color: #F4F4E0; /* Light beige background */
-        padding: 20px;
-    }
-
-    .subject-info {
-        flex: 1;
-        padding: 20px;
-    }
-
-    .student-list-container {
-        flex: 2;
-        background-color: #E0E0D1; /* Slightly darker shade */
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    h2 {
-        color: #333333;
-        margin-bottom: 20px;
-    }
-
-    /* Filter System */
-    .filter-container {
-        margin-bottom: 20px;
-        display: flex;
-        gap: 10px;
-    }
-
-    .filter-container input {
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        flex: 1;
-    }
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th, td {
-        padding: 12px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-    }
-
-    th {
-        background-color: #3E3E3E; /* Darker shade */
-        color: #FFFFFF;
-    }
-
-    tr:nth-child(even) {
-        background-color: #F9F9F9;
-    }
-
-    tr:nth-child(odd) {
-        background-color: #EAEAEA;
-    }
-
-    .grade-btn {
-        background-color: #FFCC00; /* Yellow button */
-        color: #333333;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .grade-btn:hover {
-        background-color: #FFB300;
-    }
-
-    /* Sidebar Styling */
-    #sidebar {
-        width: 250px;
-        position: fixed;
-        height: 100%;
-        background-color: #23272A;
-        padding-top: 50px;
-    }
-
-    #sidebar ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    #sidebar ul li {
-        margin: 10px 0;
-    }
-
-    #sidebar ul li a {
-        color: #99AAB5;
-        text-decoration: none;
-        display: block;
-        padding: 10px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-    }
-
-    #sidebar ul li a:hover {
-        background-color: #7289DA;
-        color: #FFFFFF;
-    }
-    
-
-    /* Modal Styling */
-    .modal {
-        display: none;
-        position: fixed;
-        z-index: 1;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-        background-color: rgba(0, 0, 0, 0.4);
-    }
-
-    .modal-content {
-        background-color: #fefefe;
-        margin: 10% auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        max-width: 500px;
-        border-radius: 10px;
-    }
-
-    .close-btn {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .close-btn:hover,
-    .close-btn:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
+    /* Your existing styles here */
 </style>
 {% endblock %}
-
-
 
 {% block content %}
 <div class="subject-detail-container">
@@ -172,74 +24,43 @@
             <input type="text" id="filter-name" placeholder="Filter by Name">
         </div>
 
+        <!-- Student List Table -->
+        <a href="{% url 'student_add' %}" class="btn btn-primary">Add New Student</a>
         <table id="student-table">
             <thead>
                 <tr>
                     <th>PRN</th>
                     <th>Name</th>
-                    <th>Year</th>
                     <th>Branch</th>
-                    <th>Div</th>
-                    <th>Action</th>
+                    <th>Year</th>
+                    <th>Division</th>
+                    <th>Email</th>
+                    <th>Mobile Number</th>
+                    <th>Details</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
-            <!-- <tbody>
+            <tbody>
                 {% for student in students %}
                 <tr>
                     <td>{{ student.prn }}</td>
                     <td>{{ student.name }}</td>
-                    <td>{{ student.year }}</td>
                     <td>{{ student.branch }}</td>
-                    <td>{{ student.div }}</td>
-                    <td><button class="grade-btn" data-student-id="{{ student.id }}">Grade</button></td>
+                    <td>{{ student.year }}</td>
+                    <td>{{ student.division }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.mobile_number }}</td>
+                    <td>
+                        <button class="grade-btn" data-student-id="{{ student.pk }}">Details</button>
+                    </td>
+                    <td class="actions">
+                        <a href="{% url 'student_edit' student.pk %}" class="btn btn-primary">Edit</a>
+                        <a href="{% url 'student_grade' student.pk %}" class="btn btn-success">Grade</a>
+                        <a href="{% url 'student_delete' student.pk %}" class="btn btn-danger">Delete</a>
+                    </td>
                 </tr>
                 {% endfor %}
-            </tbody> -->
-
-            <tbody>
-                <tr>
-                    <td>123456789</td>
-                    <td>Alice Johnson</td>
-                    <td>3rd Year</td>
-                    <td>Computer Science</td>
-                    <td>A</td>
-                    <td><button class="grade-btn" data-student-id="1">Grade</button></td>
-                </tr>
-                <tr>
-                    <td>987654321</td>
-                    <td>Bob Smith</td>
-                    <td>2nd Year</td>
-                    <td>Information Technology</td>
-                    <td>B</td>
-                    <td><button class="grade-btn" data-student-id="2">Grade</button></td>
-                </tr>
-                <tr>
-                    <td>456789123</td>
-                    <td>Carol Lee</td>
-                    <td>4th Year</td>
-                    <td>Electronics</td>
-                    <td>C</td>
-                    <td><button class="grade-btn" data-student-id="3">Grade</button></td>
-                </tr>
-                <tr>
-                    <td>789123456</td>
-                    <td>David Wright</td>
-                    <td>1st Year</td>
-                    <td>Mechanical</td>
-                    <td>D</td>
-                    <td><button class="grade-btn" data-student-id="4">Grade</button></td>
-                </tr>
-                <tr>
-                    <td>321654987</td>
-                    <td>Emily Davis</td>
-                    <td>3rd Year</td>
-                    <td>Electrical</td>
-                    <td>A</td>
-                    <td><button class="grade-btn" data-student-id="5">Grade</button></td>
-                </tr>
             </tbody>
-            
-
         </table>
     </div>
 </div>
@@ -249,15 +70,15 @@
     <div class="modal-content">
         <span class="close-btn">&times;</span>
         <h2>Student Details</h2>
-        <p id="student-details"></p>
+        <div id="student-details"></div>
     </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
-      // Filter Functionality
-      const filterPRNInput = document.getElementById('filter-prn');
+    // Filter Functionality
+    const filterPRNInput = document.getElementById('filter-prn');
     const filterNameInput = document.getElementById('filter-name');
     const studentTable = document.getElementById('student-table').getElementsByTagName('tbody')[0];
 
@@ -289,27 +110,41 @@
     document.querySelectorAll('.grade-btn').forEach(function(button) {
         button.addEventListener('click', function() {
             const studentId = this.getAttribute('data-student-id');
-            // Fetch student details based on studentId (this can be done via an AJAX request)
-            modalContent.innerHTML = `<strong>PRN:</strong> ${studentId}<br>
-                                      <strong>Name:</strong> Sample Name<br>
-                                      <strong>Year:</strong> Sample Year<br>
-                                      <strong>Branch:</strong> Sample Branch<br>
-                                      <strong>Division:</strong> Sample Div<br>
-                                      <strong>Grade:</strong> Sample Grade`;
 
-            modal.style.display = "block";
+            fetch(`/student-details/${studentId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        modalContent.innerHTML = `<p>${data.error}</p>`;
+                    } else {
+                        modalContent.innerHTML = `
+                            <strong>PRN:</strong> ${data.prn}<br>
+                            <strong>Name:</strong> ${data.name}<br>
+                            <strong>Branch:</strong> ${data.branch}<br>
+                            <strong>Year:</strong> ${data.year}<br>
+                            <strong>Division:</strong> ${data.division}<br>
+                            <strong>Email:</strong> ${data.email}<br>
+                            <strong>Mobile Number:</strong> ${data.mobile_number}
+                        `;
+                    }
+                    modal.style.display = "block";
+                })
+                .catch(error => {
+                    modalContent.innerHTML = `<p>Error fetching details.</p>`;
+                    modal.style.display = "block";
+                });
         });
     });
 
-    // Close the modal
-    closeBtn.addEventListener('click', function() {
+    // Close Modal
+    closeBtn.onclick = function() {
         modal.style.display = "none";
-    });
+    }
 
-    window.addEventListener('click', function(event) {
-        if (event.target === modal) {
+    window.onclick = function(event) {
+        if (event.target == modal) {
             modal.style.display = "none";
         }
-    });
+    }
 </script>
 {% endblock %}

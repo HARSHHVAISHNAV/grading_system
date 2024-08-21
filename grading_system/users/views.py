@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
@@ -82,3 +83,28 @@ def grade_student(request, pk):
 def student_detail(request, pk):
     student = get_object_or_404(Students, pk=pk)
     return render(request, 'student_detail.html', {'student': student})
+
+
+def student_details(request, student_id):
+    try:
+        student = Students.objects.get(pk=student_id)
+        data = {
+            'prn': student.prn,
+            'name': student.name,
+            'branch': student.branch,
+            'year': student.year,
+            'division': student.division,
+            'email': student.email,
+            'mobile_number': student.mobile_number
+        }
+        return JsonResponse(data)
+    except Students.DoesNotExist:
+        return JsonResponse({'error': 'Student not found'}, status=404)
+    
+
+
+def add_subject(request):
+    if request.method == 'POST':
+        # Process form data here
+        pass
+    return render(request, 'add_subj.html')

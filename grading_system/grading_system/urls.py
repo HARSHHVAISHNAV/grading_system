@@ -30,6 +30,8 @@ urlpatterns = [
     path('students/add/', user_views.student_add, name='student_add'),
     path('students/edit/<str:pk>/', user_views.StudentUpdateView.as_view(), name='student_edit'),
     path('students/delete/<str:pk>/', user_views.StudentDeleteView.as_view(), name='student_delete'),
-     path('student/<str:pk>/grade/', user_views.grade_student, name='student_grade'),
+    path('student/<str:pk>/grade/', user_views.grade_student, name='student_grade'),
     path('student/<str:pk>/detail/', user_views.student_detail, name='student_detail'),
+    path('student-details/<int:student_id>/', user_views.student_details, name='student_details'),
+    path('add-subject/', user_views.add_subject, name='add_subject'),
 ]

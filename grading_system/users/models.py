@@ -56,6 +56,7 @@ class MarksPrac(models.Model):
 
 class CaseStudy(models.Model):
     prn = models.ForeignKey(Students, on_delete=models.CASCADE, to_field='prn')
+    course_code = models.ForeignKey(Courses, on_delete=models.CASCADE, to_field='course_code')
     understanding_marks = models.IntegerField()
     analysis_application_marks = models.IntegerField()
     solution_recommendation_marks = models.IntegerField()
@@ -68,6 +69,7 @@ class CaseStudy(models.Model):
 
 class Design(models.Model):
     prn = models.ForeignKey(Students, on_delete=models.CASCADE, to_field='prn')
+    course_code = models.ForeignKey(Courses, on_delete=models.CASCADE, to_field='course_code')
     empathy_problem_definition_marks = models.IntegerField()
     ideation_marks = models.IntegerField()
     prototyping_marks = models.IntegerField()
@@ -79,6 +81,7 @@ class Design(models.Model):
 
 class Innovation(models.Model):
     prn = models.ForeignKey(Students, on_delete=models.CASCADE, to_field='prn')
+    course_code = models.ForeignKey(Courses, on_delete=models.CASCADE, to_field='course_code')
     originality_marks = models.IntegerField()
     relevance_impact_marks = models.IntegerField()
     feasibility_marks = models.IntegerField()
@@ -90,6 +93,7 @@ class Innovation(models.Model):
 
 class Quiz(models.Model):
     prn = models.ForeignKey(Students, on_delete=models.CASCADE, to_field='prn')
+    course_code = models.ForeignKey(Courses, on_delete=models.CASCADE, to_field='course_code')
     mcqs_marks = models.IntegerField()
     short_answer_marks = models.IntegerField()
     full_answer_marks = models.IntegerField()
@@ -100,6 +104,7 @@ class Quiz(models.Model):
 
 class Ppt(models.Model):
     prn = models.ForeignKey(Students, on_delete=models.CASCADE, to_field='prn')
+    course_code = models.ForeignKey(Courses, on_delete=models.CASCADE, to_field='course_code')
     content_marks = models.IntegerField()
     organization_marks = models.IntegerField()
     design_marks = models.IntegerField()
@@ -112,6 +117,7 @@ class Ppt(models.Model):
 
 class Gd(models.Model):
     prn = models.ForeignKey(Students, on_delete=models.CASCADE, to_field='prn')
+    course_code = models.ForeignKey(Courses, on_delete=models.CASCADE, to_field='course_code')
     content_knowledge_marks = models.IntegerField()
     communication_skills_marks = models.IntegerField()
     participation_contribution_marks = models.IntegerField()
@@ -122,6 +128,7 @@ class Gd(models.Model):
 
 class Presentation(models.Model):
     prn = models.ForeignKey(Students, on_delete=models.CASCADE, to_field='prn')
+    course_code = models.ForeignKey(Courses, on_delete=models.CASCADE, to_field='course_code')
     content_marks = models.IntegerField()
     organization_marks = models.IntegerField()
     presentation_skills_marks = models.IntegerField()
