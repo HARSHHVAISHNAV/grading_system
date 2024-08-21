@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+    <form action="{% url 'feedback' %}" method="post">
+        {% csrf_token %}
+        <label for="student_name">Student Name:</label>
+        <input type="text" id="student_name" name="student_name" required>
+
+        <label for="assignment">Assignment:</label>
+        <select id="assignment" name="assignment" required>
+            {% for scheme in marking_schemes %}
+            <option value="{{ scheme.id }}">{{ scheme.assignment_name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="feedback">Feedback:</label>
+        <textarea id="feedback" name="feedback" rows="5" required></textarea>
+
+        <input type="submit" value="Submit Feedback">
+    </form>
+</section>
+{% endblock %}

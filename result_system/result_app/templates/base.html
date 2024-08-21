@@ -1,0 +1,31 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Grading Platform{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <header>
+        <h1>{% block header %}Welcome to the Grading Platform{% endblock %}</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                <li><a href="{% url 'create_marking_scheme' %}">Create Marking Scheme</a></li>
+                <li><a href="{% url 'track_progress' %}">Track Progress</a></li>
+                <li><a href="{% url 'generate_reports' %}">Generate Reports</a></li>
+                <li><a href="{% url 'feedback' %}">Feedback</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        <p>&copy; 2024 Grading Platform. All rights reserved.</p>
+    </footer>
+</body>
+</html>
