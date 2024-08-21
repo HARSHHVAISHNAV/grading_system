@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}Edit Student{% endblock %}
+
+{% block content %}
+<h1>Edit Student</h1>
+<form method="post">
+    {% csrf_token %}
+    <label for="id">PRN:</label>
+    <input type="text" id="id" name="id" value="{{ student.pk }}" readonly><br>
+
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="{{ student.name }}" required><br>
+
+    <label for="branch">Branch:</label>
+    <input type="text" id="branch" name="branch" value="{{ student.branch }}" required><br>
+
+    <label for="year">Year:</label>
+    <input type="text" id="year" name="year" value="{{ student.year }}" required><br>
+
+    <label for="division">Division:</label>
+    <input type="text" id="division" name="division" value="{{ student.division }}" required><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="{{ student.email }}" required><br>
+
+    <label for="mobile_number">Mobile Number:</label>
+    <input type="text" id="mobile_number" name="mobile_number" value="{{ student.mobile_number }}" required><br>
+
+    <label for="acad_year">Academic Year:</label>
+    <input type="text" id="acad_year" name="acad_year" value="{{ student.acad_year }}" required><br>
+
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+</form>
+<a href="{% url 'student_list' %}" class="btn btn-secondary">Back to List</a>
+{% endblock %}

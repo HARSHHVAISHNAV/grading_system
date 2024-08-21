@@ -26,4 +26,10 @@ urlpatterns = [
     path('mysub/', user_views.mysub_view, name='mysub'), 
     path('dashboard/', user_views.home_view, name='dashboard'), 
     path('subject/<int:subject_id>/', user_views.subject_detail, name='subject_detail'),
+    path('students/', user_views.student_list, name='student_list'),
+    path('students/add/', user_views.student_add, name='student_add'),
+    path('students/edit/<str:pk>/', user_views.StudentUpdateView.as_view(), name='student_edit'),
+    path('students/delete/<str:pk>/', user_views.StudentDeleteView.as_view(), name='student_delete'),
+     path('student/<str:pk>/grade/', user_views.grade_student, name='student_grade'),
+    path('student/<str:pk>/detail/', user_views.student_detail, name='student_detail'),
 ]

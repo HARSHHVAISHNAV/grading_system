@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Details{% endblock %}
+
+{% block content %}
+<h1>Student Details</h1>
+<p><strong>PRN:</strong> {{ student.prn }}</p>
+<p><strong>Name:</strong> {{ student.name }}</p>
+<p><strong>Branch:</strong> {{ student.branch }}</p>
+<p><strong>Year:</strong> {{ student.year }}</p>
+<p><strong>Division:</strong> {{ student.division }}</p>
+<p><strong>Email:</strong> {{ student.email }}</p>
+<p><strong>Mobile Number:</strong> {{ student.mobile_number }}</p>
+
+<!-- You can add more details or functionalities here -->
+<a href="{% url 'student_list' %}" class="btn btn-primary">Back to List</a>
+{% endblock %}
