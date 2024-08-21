@@ -18,9 +18,12 @@ from django.contrib import admin
 from django.urls import path
 from users import views as user_views
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', user_views.home_view, name='home'),
     path('login/', user_views.login_view, name='login'),
     path('mysub/', user_views.mysub_view, name='mysub'), 
+    path('dashboard/', user_views.home_view, name='dashboard'), 
+    path('subject/<int:subject_id>/', user_views.subject_detail, name='subject_detail'),
 ]

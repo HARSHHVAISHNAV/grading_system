@@ -28,3 +28,16 @@ class Grade(models.Model):
 
     def __str__(self):
         return f"{self.student.username} - {self.course.name}"
+    
+class Subject(models.Model):
+    title = models.CharField(max_length=100)
+    code = models.CharField(max_length=10)
+    room = models.CharField(max_length=10)
+
+class Student(models.Model):
+    prn = models.CharField(max_length=15)
+    name = models.CharField(max_length=100)
+    year = models.CharField(max_length=10)
+    branch = models.CharField(max_length=50)
+    div = models.CharField(max_length=5)
+    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)

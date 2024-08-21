@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}Subject Details{% endblock %}
+
+{% block extra_css %}
+<style>
+    .subject-detail-container {
+        display: flex;
+        background-color: #F4F4E0; /* Light beige background */
+        padding: 20px;
+    }
+
+    .subject-info {
+        flex: 1;
+        padding: 20px;
+    }
+
+    .student-list-container {
+        flex: 2;
+        background-color: #E0E0D1; /* Slightly darker shade */
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        color: #333333;
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #3E3E3E; /* Darker shade */
+        color: #FFFFFF;
+    }
+
+    tr:nth-child(even) {
+        background-color: #F9F9F9;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #EAEAEA;
+    }
+
+    .grade-btn {
+        background-color: #FFCC00; /* Yellow button */
+        color: #333333;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .grade-btn:hover {
+        background-color: #FFB300;
+    }
+
+    /* Sidebar Styling */
+    #sidebar {
+        background: linear-gradient(to bottom, #FFCC00, #FF9900); /* Gradient similar to your reference */
+        color: #333333;
+        padding: 20px;
+    }
+
+    #sidebar ul li a {
+        color: #333333;
+    }
+
+    #sidebar ul li a.active {
+        background-color: #FF9900;
+        color: #FFFFFF;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="subject-detail-container">
+    <h1>{{ subject.title }}</h1>
+    <p><strong>Code:</strong> {{ subject.code }}</p>
+    <p><strong>Room:</strong> {{ subject.room }}</p>
+
+    <h2>Enrolled Students</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>PRN</th>
+                <th>Name</th>
+                <th>Year</th>
+                <th>Branch</th>
+                <th>Div</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.prn }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.year }}</td>
+                <td>{{ student.branch }}</td>
+                <td>{{ student.div }}</td>
+                <td><button class="grade-btn">Grade</button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll('.grade-btn').forEach(function(button) {
+        button.addEventListener('click', function() {
+            alert('Grade button clicked');
+            // Placeholder for grading functionality
+        });
+    });
+</script>
+{% endblock %}

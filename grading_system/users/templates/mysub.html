@@ -7,7 +7,7 @@
     .subjects-container {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
+        gap: 30px;
         padding: 20px;
         background-color: #2C2F33;
         margin-top: 80px; /* Ensure space below the navbar */
@@ -108,27 +108,13 @@
 </div>
 
 <div id="main-content" class="subjects-container">
-    <!-- Example Subject Cards -->
-    <div class="subject-card">
-        <div class="subject-title">Mathematics</div>
-        <div class="subject-description">Code: MATH101</div>
-        <div class="subject-description">Room: 301</div>
+    {% for subject in subjects %}
+    <div class="subject-card" onclick="navigateToSubject({{ subject.id }})">
+        <div class="subject-title">{{ subject.name }}</div>
+        <div class="subject-description">Code: {{ subject.code }}</div>
+        <div class="subject-description">Room: {{ subject.room }}</div>
     </div>
-    <div class="subject-card">
-        <div class="subject-title">Science</div>
-        <div class="subject-description">Code: SCI101</div>
-        <div class="subject-description">Room: 302</div>
-    </div>
-    <div class="subject-card">
-        <div class="subject-title">History</div>
-        <div class="subject-description">Code: HIST101</div>
-        <div class="subject-description">Room: 303</div>
-    </div>
-    <div class="subject-card">
-        <div class="subject-title">English</div>
-        <div class="subject-description">Code: ENG101</div>
-        <div class="subject-description">Room: 304</div>
-    </div>
+    {% endfor %}
 </div>
 {% endblock %}
 
@@ -138,5 +124,10 @@
         alert('Add Subject button clicked');
         // Placeholder for future functionality
     });
+    function navigateToSubject(subjectId) {
+    const url = "{% url 'subject_detail' subject_id=0 %}".replace('0', subjectId);
+    window.location.href = url;
+}
+
 </script>
 {% endblock %}
