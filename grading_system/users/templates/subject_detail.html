@@ -4,7 +4,9 @@
 
 {% block extra_css %}
 <style>
+    /* Ensure the table aligns below the navbar */
     .subject-detail-container {
+        margin-top: 20px; /* Adjust to avoid overlap with the navbar */
         display: flex;
         background-color: #F4F4E0; /* Light beige background */
         padding: 20px;
@@ -26,6 +28,20 @@
     h2 {
         color: #333333;
         margin-bottom: 20px;
+    }
+
+    /* Filter System */
+    .filter-container {
+        margin-bottom: 20px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .filter-container input {
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        flex: 1;
     }
 
     table {
@@ -68,64 +84,232 @@
 
     /* Sidebar Styling */
     #sidebar {
-        background: linear-gradient(to bottom, #FFCC00, #FF9900); /* Gradient similar to your reference */
-        color: #333333;
-        padding: 20px;
+        width: 250px;
+        position: fixed;
+        height: 100%;
+        background-color: #23272A;
+        padding-top: 50px;
+    }
+
+    #sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    #sidebar ul li {
+        margin: 10px 0;
     }
 
     #sidebar ul li a {
-        color: #333333;
+        color: #99AAB5;
+        text-decoration: none;
+        display: block;
+        padding: 10px;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
     }
 
-    #sidebar ul li a.active {
-        background-color: #FF9900;
+    #sidebar ul li a:hover {
+        background-color: #7289DA;
         color: #FFFFFF;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+    
+
+    /* Modal Styling */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .modal-content {
+        background-color: #fefefe;
+        margin: 10% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 500px;
+        border-radius: 10px;
+    }
+
+    .close-btn {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .close-btn:hover,
+    .close-btn:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
     }
 </style>
 {% endblock %}
 
+
+
 {% block content %}
 <div class="subject-detail-container">
-    <h1>{{ subject.title }}</h1>
-    <p><strong>Code:</strong> {{ subject.code }}</p>
-    <p><strong>Room:</strong> {{ subject.room }}</p>
+    <div class="subject-info">
+        <h1>{{ subject.title }}</h1>
+        <p><strong>Code:</strong> {{ subject.code }}</p>
+        <p><strong>Room:</strong> {{ subject.room }}</p>
+    </div>
+    <div class="student-list-container">
+        <h2>Enrolled Students</h2>
+        
+        <!-- Filter Section -->
+        <div class="filter-container">
+            <input type="text" id="filter-prn" placeholder="Filter by PRN">
+            <input type="text" id="filter-name" placeholder="Filter by Name">
+        </div>
 
-    <h2>Enrolled Students</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>PRN</th>
-                <th>Name</th>
-                <th>Year</th>
-                <th>Branch</th>
-                <th>Div</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for student in students %}
-            <tr>
-                <td>{{ student.prn }}</td>
-                <td>{{ student.name }}</td>
-                <td>{{ student.year }}</td>
-                <td>{{ student.branch }}</td>
-                <td>{{ student.div }}</td>
-                <td><button class="grade-btn">Grade</button></td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <table id="student-table">
+            <thead>
+                <tr>
+                    <th>PRN</th>
+                    <th>Name</th>
+                    <th>Year</th>
+                    <th>Branch</th>
+                    <th>Div</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <!-- <tbody>
+                {% for student in students %}
+                <tr>
+                    <td>{{ student.prn }}</td>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.year }}</td>
+                    <td>{{ student.branch }}</td>
+                    <td>{{ student.div }}</td>
+                    <td><button class="grade-btn" data-student-id="{{ student.id }}">Grade</button></td>
+                </tr>
+                {% endfor %}
+            </tbody> -->
+
+            <tbody>
+                <tr>
+                    <td>123456789</td>
+                    <td>Alice Johnson</td>
+                    <td>3rd Year</td>
+                    <td>Computer Science</td>
+                    <td>A</td>
+                    <td><button class="grade-btn" data-student-id="1">Grade</button></td>
+                </tr>
+                <tr>
+                    <td>987654321</td>
+                    <td>Bob Smith</td>
+                    <td>2nd Year</td>
+                    <td>Information Technology</td>
+                    <td>B</td>
+                    <td><button class="grade-btn" data-student-id="2">Grade</button></td>
+                </tr>
+                <tr>
+                    <td>456789123</td>
+                    <td>Carol Lee</td>
+                    <td>4th Year</td>
+                    <td>Electronics</td>
+                    <td>C</td>
+                    <td><button class="grade-btn" data-student-id="3">Grade</button></td>
+                </tr>
+                <tr>
+                    <td>789123456</td>
+                    <td>David Wright</td>
+                    <td>1st Year</td>
+                    <td>Mechanical</td>
+                    <td>D</td>
+                    <td><button class="grade-btn" data-student-id="4">Grade</button></td>
+                </tr>
+                <tr>
+                    <td>321654987</td>
+                    <td>Emily Davis</td>
+                    <td>3rd Year</td>
+                    <td>Electrical</td>
+                    <td>A</td>
+                    <td><button class="grade-btn" data-student-id="5">Grade</button></td>
+                </tr>
+            </tbody>
+            
+
+        </table>
+    </div>
+</div>
+
+<!-- Modal for Student Details -->
+<div id="student-modal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h2>Student Details</h2>
+        <p id="student-details"></p>
+    </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
+      // Filter Functionality
+      const filterPRNInput = document.getElementById('filter-prn');
+    const filterNameInput = document.getElementById('filter-name');
+    const studentTable = document.getElementById('student-table').getElementsByTagName('tbody')[0];
+
+    function filterStudents() {
+        const filterPRN = filterPRNInput.value.toLowerCase();
+        const filterName = filterNameInput.value.toLowerCase();
+        const rows = studentTable.getElementsByTagName('tr');
+
+        for (let i = 0; i < rows.length; i++) {
+            const prn = rows[i].getElementsByTagName('td')[0].textContent.toLowerCase();
+            const name = rows[i].getElementsByTagName('td')[1].textContent.toLowerCase();
+
+            if (prn.includes(filterPRN) && name.includes(filterName)) {
+                rows[i].style.display = '';
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    }
+
+    filterPRNInput.addEventListener('input', filterStudents);
+    filterNameInput.addEventListener('input', filterStudents);
+
+    // Modal Functionality
+    const modal = document.getElementById("student-modal");
+    const modalContent = document.getElementById("student-details");
+    const closeBtn = document.getElementsByClassName("close-btn")[0];
+
     document.querySelectorAll('.grade-btn').forEach(function(button) {
         button.addEventListener('click', function() {
-            alert('Grade button clicked');
-            // Placeholder for grading functionality
+            const studentId = this.getAttribute('data-student-id');
+            // Fetch student details based on studentId (this can be done via an AJAX request)
+            modalContent.innerHTML = `<strong>PRN:</strong> ${studentId}<br>
+                                      <strong>Name:</strong> Sample Name<br>
+                                      <strong>Year:</strong> Sample Year<br>
+                                      <strong>Branch:</strong> Sample Branch<br>
+                                      <strong>Division:</strong> Sample Div<br>
+                                      <strong>Grade:</strong> Sample Grade`;
+
+            modal.style.display = "block";
         });
+    });
+
+    // Close the modal
+    closeBtn.addEventListener('click', function() {
+        modal.style.display = "none";
+    });
+
+    window.addEventListener('click', function(event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
     });
 </script>
 {% endblock %}
